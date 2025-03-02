@@ -105,9 +105,12 @@ function setup() {
   
   // Create input field for player name
   inputField = createInput('');
-  inputField.position(width/2 - 100, 100);
+  inputField.position(width/2 - 100, height/2 - 50);
   inputField.size(200);
   inputField.hide();
+  
+  // Add window resize event listener
+  window.addEventListener('resize', windowResized);
   
   // Initialize timer
   startTime = millis();
@@ -319,20 +322,28 @@ function draw() {
     
     // Show name input if not entered yet
     if (playerName === "") {
-      fill(255);
-      stroke(0);
-      rect(width/2, 150, 400, 200);
+      // Draw background box with gradient
+      fill(255, 240, 245);
+      stroke(255, 182, 193);
+      strokeWeight(3);
+      rect(width/2, height/2, 400, 200, 15);
+      
+      // Draw title
       fill(0);
-      textSize(20);
-      text("Syötä nimesi tulostaulukkoon:", width/2, 80);
+      textSize(24);
+      text("Syötä nimesi tulostaulukkoon:", width/2, height/2 - 60);
+      
+      // Update input field position each frame to ensure it stays aligned
+      updateInputFieldPosition();
       inputField.show();
       
       // Draw submit button for name
       fill(144, 238, 144);
       stroke(34, 139, 34);
-      rect(width/2, 180, 100, 30);
+      rect(width/2, height/2 + 50, 100, 30, 15);
       fill(0);
-      text("OK", width/2, 180);
+      textSize(20);
+      text("OK", width/2, height/2 + 50);
     } else {
       // Show scoreboard
       drawScoreboard();
@@ -737,7 +748,7 @@ function mousePressed() {
   if (gameState === "correct" && playerName === "") {
     // Check if OK button is clicked for name submission
     if (mouseX > width/2 - 50 && mouseX < width/2 + 50 &&
-        mouseY > 165 && mouseY < 195) {
+        mouseY > height/2 + 35 && mouseY < height/2 + 65) {
       submitScore();
     }
   }
@@ -902,4 +913,32 @@ function drawNewGameButton() {
   // Add sparkles
   drawButtonSparkles(newGameButton.x, buttonY);
   pop();
+}
+
+function windowResized() {
+  // Resize canvas to fit window (optional, remove if you want fixed size)
+  // resizeCanvas(windowWidth, windowHeight);
+  
+  // Update input field position if it's visible
+  if (gameState === "correct" && playerName === "") {
+    updateInputFieldPosition();
+  }
+}
+
+function updateInputFieldPosition() {
+  // Get the canvas position and scale
+  let canvas = document.querySelector('canvas');
+  let rect = canvas.getBoundingClientRect();
+  
+  // Calculate scale factors
+  let scaleX = rect.width / width;
+  let scaleY = rect.height / height;
+  
+  // Calculate the position in browser coordinates
+  let inputX = rect.left + (width/2 - 100) * scaleX;
+  let inputY = rect.top + (height/2 - 30) * scaleY; // Move up more to create better spacing
+  
+  // Update input field position
+  inputField.position(inputX, inputY);
+  inputField.size(200 * scaleX);
 }
