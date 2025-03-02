@@ -1,4 +1,4 @@
-# Kuukausipeli (Months Game)
+# Kuukausipeli (Months Game) - v1.0
 
 A fun and interactive educational game to learn Finnish months in the correct order. Built with p5.js, this game features a beautiful interface with animated elements and a high-score system.
 
