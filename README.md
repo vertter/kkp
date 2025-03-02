@@ -32,6 +32,17 @@ A fun and interactive educational game to learn Finnish months in the correct or
 - Local Storage for high scores
 - Vanilla JavaScript
 
+## Recent Bugfixes
+
+### UI Improvements
+- Fixed alignment issues with the name input field in the high score dialog
+- Improved vertical spacing between input field and OK button
+- Added responsive positioning to maintain proper alignment when window is resized
+- Enhanced visual consistency of UI elements
+
+### Known Issues
+- None currently reported
+
 ## License
 
 MIT License - feel free to use and modify for your own projects!
